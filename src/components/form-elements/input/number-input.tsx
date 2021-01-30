@@ -10,7 +10,7 @@ interface Props {
 }
 
 const TextInput: React.FC<Props> = ({ field, ...rest }) => {
-  return <StyledInput type="text" {...field} {...rest} />;
+  return <StyledInput type="number" {...field} {...rest} />;
 };
 
 export default TextInput;

@@ -5,10 +5,14 @@ interface FormData<T> {
   values: T;
   errors: FormikErrors<T>;
 }
+
+interface FormActions {
+  setFieldValue: any;
+}
 interface Props<T> {
   handleSubmit: (values: T) => void;
   initialValues: T;
-  children: (d: FormData<T>) => JSX.Element;
+  children: (d: FormData<T>, a: FormActions) => JSX.Element;
 }
 
 const Form = <T,>({
@@ -17,7 +21,9 @@ const Form = <T,>({
   children,
 }: PropsWithChildren<Props<T>>): JSX.Element => (
   <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-    {({ values, errors }) => <FormikForm>{children({ values, errors })}</FormikForm>}
+    {({ values, errors, setFieldValue }) => (
+      <FormikForm>{children({ values, errors }, { setFieldValue })}</FormikForm>
+    )}
   </Formik>
 );
 
