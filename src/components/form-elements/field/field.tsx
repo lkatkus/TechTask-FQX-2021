@@ -13,6 +13,7 @@ interface Props {
   currency?: string;
   onBlur?: () => void;
   baseField?: string;
+  validate?: (value: any) => string | void;
 }
 
 const Field: React.FC<Props> = ({ label, name, component, baseField, ...rest }) => (

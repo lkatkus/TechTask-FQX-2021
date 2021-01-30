@@ -30,11 +30,7 @@ const EnoteFaceValue: React.FC<Props> = ({
     onBlur={() => {
       handleBaseFieldChange('enoteFaceValue');
 
-      if (
-        values.financingAmount > 0 &&
-        values.enoteFaceValue > 0 &&
-        values.enoteFaceValue > values.financingAmount
-      ) {
+      if (values.financingAmount > 0 && values.enoteFaceValue > 0) {
         handleChangeValues(formHelpers.BASE_FIELD_CALCULATIONS.enoteFaceValue(values));
       }
     }}

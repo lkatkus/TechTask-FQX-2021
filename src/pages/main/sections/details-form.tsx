@@ -38,18 +38,16 @@ const initialFormValues = {
   enoteFaceValue: 0,
 };
 
-const Main: React.FC = () => {
+interface Props {
+  handleSubmit: (values: FormProps) => void;
+}
+
+const Main: React.FC<Props> = ({ handleSubmit }) => {
   const [baseField, setBaseField] = useState<AvailableCalculations | undefined>();
 
   return (
-    <Form<FormProps>
-      initialValues={initialFormValues}
-      handleSubmit={(values) => {
-        // @TODO handle submit
-        console.log('SUBMIT', values);
-      }}
-    >
-      {({ values }, { setFieldValue, setValues }) => {
+    <Form<FormProps> initialValues={initialFormValues} handleSubmit={handleSubmit}>
+      {({ values }, { setValues }) => {
         const isDisabled = !values.maturity;
 
         return (
@@ -60,21 +58,24 @@ const Main: React.FC = () => {
                   <FinancingAmount />
                 </Box>
                 <Box width="100%">
-                  <PaymentDate values={values} handleChangeValue={setFieldValue} />
+                  <PaymentDate
+                    baseField={baseField}
+                    values={values}
+                    handleChangeValues={setValues}
+                  />
                 </Box>
               </FormSection>
 
               <FormSection label="Enote terms">
                 <Box width={['100%', '50%']} mb={10} pr={[0, 10]}>
-                  <EnoteDueDate values={values} handleChangeValue={setFieldValue} />
-                </Box>
-                <Box width={['100%', '50%']} mb={10} pl={[0, 10]}>
-                  <Maturity
-                    values={values}
+                  <EnoteDueDate
                     baseField={baseField}
-                    handleChangeValue={setFieldValue}
+                    values={values}
                     handleChangeValues={setValues}
                   />
+                </Box>
+                <Box width={['100%', '50%']} mb={10} pl={[0, 10]}>
+                  <Maturity values={values} baseField={baseField} handleChangeValues={setValues} />
                 </Box>
                 <Box width={['100%', '25%']} mb={10} pr={[0, 10]}>
                   <AgioPct

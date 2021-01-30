@@ -1,8 +1,34 @@
-import { addDays, differenceInCalendarDays, isValid } from 'date-fns';
+import { addDays, differenceInCalendarDays, isValid, format } from 'date-fns';
 
 import { FormProps } from '../details-form';
 
 export type AvailableCalculations = 'agioPct' | 'agioValue' | 'aprPct' | 'enoteFaceValue';
+
+export const onMaturityChange = (
+  values: FormProps,
+  baseField: AvailableCalculations | void,
+): FormProps | void => {
+  let recalculatedValues = { ...values };
+
+  if (!!values.paymentDate && values.maturity > 0) {
+    const newDueDate = calculateDueDate(new Date(values.paymentDate), values.maturity);
+
+    recalculatedValues = {
+      ...recalculatedValues,
+      enoteDueDate: format(new Date(newDueDate), 'yyyy-MM-dd'),
+    };
+  }
+
+  if (baseField) {
+    const recalculatedWithBase = calculateRelated(recalculatedValues, baseField);
+
+    if (recalculatedWithBase) {
+      recalculatedValues = { ...recalculatedValues, ...recalculatedWithBase };
+    }
+  }
+
+  return recalculatedValues;
+};
 
 export const BASE_FIELD_CALCULATIONS = {
   agioPct: (values: FormProps): FormProps => {
@@ -63,12 +89,8 @@ export const BASE_FIELD_CALCULATIONS = {
   },
 };
 
-export const calculateMaturity = (paymentDate: Date, enoteDueDate: Date): number | void => {
-  if (isValid(paymentDate) && isValid(enoteDueDate)) {
-    return differenceInCalendarDays(enoteDueDate, paymentDate);
-  }
-
-  return undefined;
+export const calculateMaturity = (paymentDate: Date, enoteDueDate: Date): number => {
+  return differenceInCalendarDays(enoteDueDate, paymentDate);
 };
 
 export const calculateDueDate = (paymentDate: Date, maturity: number): Date => {

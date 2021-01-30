@@ -7,10 +7,11 @@ import * as formHelpers from './field.utils';
 
 interface Props {
   values: FormProps;
-  handleChangeValue: (name: string, value: any) => void;
+  baseField: formHelpers.AvailableCalculations | undefined;
+  handleChangeValues: (values: FormProps) => void;
 }
 
-const EnoteDueDate: React.FC<Props> = ({ values, handleChangeValue }) => (
+const EnoteDueDate: React.FC<Props> = ({ values, baseField, handleChangeValues }) => (
   <Field
     disabled={!values.paymentDate}
     name="enoteDueDate"
@@ -24,7 +25,14 @@ const EnoteDueDate: React.FC<Props> = ({ values, handleChangeValue }) => (
           new Date(values.enoteDueDate),
         );
 
-        handleChangeValue('maturity', newMaturity);
+        const recalculatedValues = formHelpers.onMaturityChange(
+          { ...values, maturity: newMaturity },
+          baseField,
+        );
+
+        if (recalculatedValues) {
+          handleChangeValues(recalculatedValues);
+        }
       }
     }}
   />
