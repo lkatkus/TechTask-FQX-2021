@@ -1,15 +1,21 @@
 import React from 'react';
 
+import { Box } from 'src/core';
+
+import { SectionContainer, SectionLabel } from './components';
+
 interface Props {
   label: string;
 }
 
 const FormSection: React.FC<Props> = ({ label, children }) => {
   return (
-    <div>
-      <div>{label}</div>
-      <div>{children}</div>
-    </div>
+    <SectionContainer>
+      <SectionLabel>{label}</SectionLabel>
+      <Box display="flex" flexWrap="wrap">
+        {children}
+      </Box>
+    </SectionContainer>
   );
 };
 
