@@ -11,10 +11,11 @@ interface Props {
   max?: any;
   currency?: string;
   onBlur?: () => void;
+  baseField?: string;
 }
 
-const Field: React.FC<Props> = ({ label, name, component, ...rest }) => (
-  <FieldContainer>
+const Field: React.FC<Props> = ({ label, name, component, baseField, ...rest }) => (
+  <FieldContainer isBaseField={baseField === name}>
     <FieldLabel>{label}</FieldLabel>
     <FormikField name={name} component={component} {...rest} />
   </FieldContainer>
