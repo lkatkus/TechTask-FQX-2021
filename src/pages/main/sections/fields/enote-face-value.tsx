@@ -11,7 +11,7 @@ interface Props {
   values: FormProps;
   baseField: formHelpers.AvailableCalculations | undefined;
   handleBaseFieldChange: (name: formHelpers.AvailableCalculations) => void;
-  handleChangeValue: any;
+  handleChangeValue: (field: string, value: string | number) => void;
 }
 
 const EnoteFaceValue: React.FC<Props> = ({
@@ -40,7 +40,7 @@ const EnoteFaceValue: React.FC<Props> = ({
         enoteFaceValue: Number(enoteFaceValue),
       });
 
-      handleChangeValue('enoteFaceValue', enoteFaceValue);
+      handleChangeValue('enoteFaceValue', Number(enoteFaceValue));
       handleChangeValue('agioPct', recalculatedValues.agioPct);
       handleChangeValue('agioValue', recalculatedValues.agioValue);
       handleChangeValue('aprPct', recalculatedValues.aprPct);

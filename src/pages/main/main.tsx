@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 
 import { PageContainer } from 'src/container';
 
-import { DetailsForm, FormSummary } from './sections';
+import { DetailsForm, FormSummary, FormProps } from './sections';
 
 const MainPage: React.FC = () => {
-  const [noteValues, setNoteValues] = useState<any>();
+  const [noteValues, setNoteValues] = useState<FormProps | undefined>();
 
   return (
     <PageContainer>
       {noteValues ? (
-        <FormSummary noteValues={noteValues} />
+        <FormSummary noteValues={noteValues} handleReset={() => setNoteValues(undefined)} />
       ) : (
         <DetailsForm handleSubmit={(values) => setNoteValues(values)} />
       )}

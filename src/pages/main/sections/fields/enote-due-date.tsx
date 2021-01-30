@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Field, Input } from 'src/components';
+import * as validations from 'src/utils/validations';
 
 import { FormProps } from '../details-form';
 import * as formHelpers from './field.utils';
@@ -18,6 +19,7 @@ const EnoteDueDate: React.FC<Props> = ({ values, baseField, handleChangeValues }
     label="eNote Due Date"
     component={Input.Date}
     min={values.paymentDate}
+    validate={validations.isRequired()}
     onChange={(value: string) => {
       if (!!values.paymentDate && value) {
         const newMaturity = formHelpers.calculateMaturity(

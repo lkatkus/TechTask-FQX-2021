@@ -8,7 +8,7 @@ import * as formHelpers from './field.utils';
 
 interface Props {
   values: FormProps;
-  baseField: formHelpers.AvailableCalculations | undefined;
+  baseField?: formHelpers.AvailableCalculations | undefined;
   handleChangeValues: (values: FormProps) => void;
 }
 

@@ -10,7 +10,7 @@ interface Props {
   values: FormProps;
   baseField: formHelpers.AvailableCalculations | undefined;
   handleBaseFieldChange: (name: formHelpers.AvailableCalculations) => void;
-  handleChangeValue: any;
+  handleChangeValue: (field: string, value: string | number) => void;
 }
 
 const AgioValue: React.FC<Props> = ({
@@ -35,7 +35,7 @@ const AgioValue: React.FC<Props> = ({
         agioValue: Number(agioValue),
       });
 
-      handleChangeValue('agioValue', agioValue);
+      handleChangeValue('agioValue', Number(agioValue));
       handleChangeValue('agioPct', recalculatedValues.agioPct);
       handleChangeValue('aprPct', recalculatedValues.aprPct);
       handleChangeValue('enoteFaceValue', recalculatedValues.enoteFaceValue);

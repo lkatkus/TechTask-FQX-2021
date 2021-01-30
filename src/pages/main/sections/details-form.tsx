@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
 import { Box } from 'src/core';
-import { FormBlock } from 'src/container';
-import { Button, Form, FormSection } from 'src/components';
+import { Button, Form, PageSection, PageBlock } from 'src/components';
 
 import {
   FinancingAmount,
@@ -52,17 +51,21 @@ const Main: React.FC<Props> = ({ handleSubmit }) => {
         const isDisabled = values.maturity < 1 || !values.paymentDate || !values.enoteDueDate;
 
         return (
-          <FormBlock number={1} label="Details">
-            <FormSection label="Financing terms">
+          <PageBlock number={1} label="Details">
+            <PageSection label="Financing terms">
               <Box width="100%" mb={10}>
-                <FinancingAmount />
+                <FinancingAmount
+                  baseField={baseField}
+                  values={values}
+                  handleChangeValues={setValues}
+                />
               </Box>
               <Box width="100%">
                 <PaymentDate baseField={baseField} values={values} handleChangeValues={setValues} />
               </Box>
-            </FormSection>
+            </PageSection>
 
-            <FormSection label="Enote terms">
+            <PageSection label="Enote terms">
               <Box width={['100%', '50%']} mb={10} pr={[0, 10]}>
                 <EnoteDueDate
                   baseField={baseField}
@@ -109,10 +112,12 @@ const Main: React.FC<Props> = ({ handleSubmit }) => {
                   handleChangeValue={setFieldValue}
                 />
               </Box>
-            </FormSection>
+            </PageSection>
 
-            <Button type="submit" label="Continue" />
-          </FormBlock>
+            <Box mt={20}>
+              <Button type="submit" label="Continue" />
+            </Box>
+          </PageBlock>
         );
       }}
     </Form>

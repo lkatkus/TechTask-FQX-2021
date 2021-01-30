@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Field, Input } from 'src/components';
+import * as validations from 'src/utils/validations';
 
 import { FormProps } from '../details-form';
 import * as formHelpers from './field.utils';
@@ -17,7 +18,8 @@ const PaymentDate: React.FC<Props> = ({ values, baseField, handleChangeValues })
     label="Payment date"
     component={Input.Date}
     max={values.enoteDueDate}
-    onChange={(value: any) => {
+    validate={validations.isRequired()}
+    onChange={(value: string) => {
       if (!!value && !!values.enoteDueDate) {
         const newMaturity = formHelpers.calculateMaturity(
           new Date(value),

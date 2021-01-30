@@ -4,11 +4,10 @@ import { Formik, Form as FormikForm, FormikErrors } from 'formik';
 interface FormData<T> {
   values: T;
   errors: FormikErrors<T>;
-  touched: any;
 }
 
 interface FormActions<T> {
-  setFieldValue: any;
+  setFieldValue: (field: string, value: string | number) => void;
   setValues: (values: T) => void;
 }
 interface Props<T> {
@@ -23,8 +22,8 @@ const Form = <T,>({
   children,
 }: PropsWithChildren<Props<T>>): JSX.Element => (
   <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-    {({ values, errors, touched, setFieldValue, setValues }) => (
-      <FormikForm>{children({ values, errors, touched }, { setFieldValue, setValues })}</FormikForm>
+    {({ values, errors, setFieldValue, setValues }) => (
+      <FormikForm>{children({ values, errors }, { setFieldValue, setValues })}</FormikForm>
     )}
   </Formik>
 );

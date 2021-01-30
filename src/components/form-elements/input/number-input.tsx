@@ -1,11 +1,11 @@
 import React from 'react';
+import { FieldInputProps } from 'formik';
 
 import { StyledInput } from './components';
 
 interface Props {
   hasError?: boolean;
-  // @TODO fix typings
-  field: any;
+  field: FieldInputProps<any>;
 }
 
 const TextInput: React.FC<Props> = ({ hasError, field, ...rest }) => {

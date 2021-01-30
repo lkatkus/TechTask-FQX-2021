@@ -7,13 +7,12 @@ interface Props {
   disabled?: boolean;
   label: string;
   name: string;
-  component: any;
-  min?: any;
-  max?: any;
+  component: React.FC<any>;
+  min?: string | number;
+  max?: string | number;
   currency?: string;
-  onBlur?: () => void;
-  onChange?: (e: any) => void;
   baseField?: string;
+  onChange?: (value: any) => void;
   validate?: (value: any) => string | void;
 }
 
@@ -27,8 +26,6 @@ const Field: React.FC<Props> = ({
   ...rest
 }) => {
   const [field, meta] = useField({ name, validate });
-
-  console.log(meta);
 
   return (
     <FieldContainer isBaseField={baseField === name} hasError={!!meta.error && !!meta.touched}>

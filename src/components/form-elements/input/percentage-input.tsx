@@ -1,15 +1,14 @@
 import React from 'react';
-import styled from 'styled-components';
+import { FieldInputProps } from 'formik';
 
 import { StyledInput } from './components';
 
 interface Props {
-  // @TODO fix typings
-  field: any;
+  field: FieldInputProps<any>;
 }
 
 const PercentageInput: React.FC<Props> = ({ field, ...rest }) => {
-  return <StyledInput type="number" {...field} {...rest} />;
+  return <StyledInput type="number" step="0.01" {...field} {...rest} />;
 };
 
 export default PercentageInput;

@@ -1,11 +1,11 @@
 import React from 'react';
+import { FieldInputProps } from 'formik';
 import { isValid, format } from 'date-fns';
 
 import { StyledInput } from './components';
 
 interface Props {
-  // @TODO fix typings
-  field: any;
+  field: FieldInputProps<any>;
 }
 
 const DateInput: React.FC<Props> = ({ field, ...rest }) => {
