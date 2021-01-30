@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Field, Input } from 'src/components';
+import * as validations from 'src/utils/validations';
 
 import { FormProps } from '../details-form';
 import * as formHelpers from './field.utils';
@@ -10,7 +11,7 @@ interface Props {
   values: FormProps;
   baseField: formHelpers.AvailableCalculations | undefined;
   handleBaseFieldChange: (name: formHelpers.AvailableCalculations) => void;
-  handleChangeValues: (values: FormProps) => void;
+  handleChangeValue: any;
 }
 
 const EnoteFaceValue: React.FC<Props> = ({
@@ -18,7 +19,7 @@ const EnoteFaceValue: React.FC<Props> = ({
   baseField,
   disabled,
   handleBaseFieldChange,
-  handleChangeValues,
+  handleChangeValue,
 }) => (
   <Field
     disabled={disabled}
@@ -27,12 +28,22 @@ const EnoteFaceValue: React.FC<Props> = ({
     label="eNote Face Value"
     component={Input.Currency}
     currency="CHF"
-    onBlur={() => {
+    validate={validations.isMore(
+      values.financingAmount,
+      'eNote Face Value must be bigger than Financing Amount',
+    )}
+    onChange={(enoteFaceValue: string) => {
       handleBaseFieldChange('enoteFaceValue');
 
-      if (values.financingAmount > 0 && values.enoteFaceValue > 0) {
-        handleChangeValues(formHelpers.BASE_FIELD_CALCULATIONS.enoteFaceValue(values));
-      }
+      const recalculatedValues = formHelpers.BASE_FIELD_CALCULATIONS.enoteFaceValue({
+        ...values,
+        enoteFaceValue: Number(enoteFaceValue),
+      });
+
+      handleChangeValue('enoteFaceValue', enoteFaceValue);
+      handleChangeValue('agioPct', recalculatedValues.agioPct);
+      handleChangeValue('agioValue', recalculatedValues.agioValue);
+      handleChangeValue('aprPct', recalculatedValues.aprPct);
     }}
   />
 );

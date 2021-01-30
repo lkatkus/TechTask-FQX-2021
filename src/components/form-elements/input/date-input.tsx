@@ -1,10 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 import { isValid, format } from 'date-fns';
 
-const StyledInput = styled.input`
-  width: 100%;
-`;
+import { StyledInput } from './components';
 
 interface Props {
   // @TODO fix typings

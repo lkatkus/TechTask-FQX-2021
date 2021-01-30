@@ -47,77 +47,72 @@ const Main: React.FC<Props> = ({ handleSubmit }) => {
 
   return (
     <Form<FormProps> initialValues={initialFormValues} handleSubmit={handleSubmit}>
-      {({ values }, { setValues }) => {
-        const isDisabled = !values.maturity;
+      {({ values }, { setValues, setFieldValue }) => {
+        // Value fields should not be editable if maturity is invalid
+        const isDisabled = values.maturity < 1 || !values.paymentDate || !values.enoteDueDate;
 
         return (
-          <React.Fragment>
-            <FormBlock number={1} label="Details">
-              <FormSection label="Financing terms">
-                <Box width="100%" mb={10}>
-                  <FinancingAmount />
-                </Box>
-                <Box width="100%">
-                  <PaymentDate
-                    baseField={baseField}
-                    values={values}
-                    handleChangeValues={setValues}
-                  />
-                </Box>
-              </FormSection>
+          <FormBlock number={1} label="Details">
+            <FormSection label="Financing terms">
+              <Box width="100%" mb={10}>
+                <FinancingAmount />
+              </Box>
+              <Box width="100%">
+                <PaymentDate baseField={baseField} values={values} handleChangeValues={setValues} />
+              </Box>
+            </FormSection>
 
-              <FormSection label="Enote terms">
-                <Box width={['100%', '50%']} mb={10} pr={[0, 10]}>
-                  <EnoteDueDate
-                    baseField={baseField}
-                    values={values}
-                    handleChangeValues={setValues}
-                  />
-                </Box>
-                <Box width={['100%', '50%']} mb={10} pl={[0, 10]}>
-                  <Maturity values={values} baseField={baseField} handleChangeValues={setValues} />
-                </Box>
-                <Box width={['100%', '25%']} mb={10} pr={[0, 10]}>
-                  <AgioPct
-                    disabled={isDisabled}
-                    values={values}
-                    baseField={baseField}
-                    handleBaseFieldChange={(name) => setBaseField(name)}
-                    handleChangeValues={setValues}
-                  />
-                </Box>
-                <Box width={['100%', '25%']} mb={10} pr={[0, 10]}>
-                  <AgioValue
-                    disabled={isDisabled}
-                    values={values}
-                    baseField={baseField}
-                    handleBaseFieldChange={setBaseField}
-                    handleChangeValues={setValues}
-                  />
-                </Box>
-                <Box width={['100%', '50%']} mb={10} pl={[0, 10]}>
-                  <AprPct
-                    disabled={isDisabled}
-                    values={values}
-                    baseField={baseField}
-                    handleBaseFieldChange={setBaseField}
-                    handleChangeValues={setValues}
-                  />
-                </Box>
-                <Box width="100%">
-                  <EnoteFaceValue
-                    disabled={isDisabled}
-                    values={values}
-                    baseField={baseField}
-                    handleBaseFieldChange={setBaseField}
-                    handleChangeValues={setValues}
-                  />
-                </Box>
-              </FormSection>
+            <FormSection label="Enote terms">
+              <Box width={['100%', '50%']} mb={10} pr={[0, 10]}>
+                <EnoteDueDate
+                  baseField={baseField}
+                  values={values}
+                  handleChangeValues={setValues}
+                />
+              </Box>
+              <Box width={['100%', '50%']} mb={10} pl={[0, 10]}>
+                <Maturity values={values} baseField={baseField} handleChangeValues={setValues} />
+              </Box>
+              <Box width={['100%', '25%']} mb={10} pr={[0, 10]}>
+                <AgioPct
+                  disabled={isDisabled}
+                  values={values}
+                  baseField={baseField}
+                  handleBaseFieldChange={(name) => setBaseField(name)}
+                  handleChangeValue={setFieldValue}
+                />
+              </Box>
+              <Box width={['100%', '25%']} mb={10} pr={[0, 10]}>
+                <AgioValue
+                  disabled={isDisabled}
+                  values={values}
+                  baseField={baseField}
+                  handleBaseFieldChange={setBaseField}
+                  handleChangeValue={setFieldValue}
+                />
+              </Box>
+              <Box width={['100%', '50%']} mb={10} pl={[0, 10]}>
+                <AprPct
+                  disabled={isDisabled}
+                  values={values}
+                  baseField={baseField}
+                  handleBaseFieldChange={setBaseField}
+                  handleChangeValue={setFieldValue}
+                />
+              </Box>
+              <Box width="100%">
+                <EnoteFaceValue
+                  disabled={isDisabled}
+                  values={values}
+                  baseField={baseField}
+                  handleBaseFieldChange={setBaseField}
+                  handleChangeValue={setFieldValue}
+                />
+              </Box>
+            </FormSection>
 
-              <Button type="submit" label="Continue" />
-            </FormBlock>
-          </React.Fragment>
+            <Button type="submit" label="Continue" />
+          </FormBlock>
         );
       }}
     </Form>

@@ -1,4 +1,4 @@
-import { addDays, differenceInCalendarDays, isValid, format } from 'date-fns';
+import { addDays, differenceInCalendarDays, format } from 'date-fns';
 
 import { FormProps } from '../details-form';
 

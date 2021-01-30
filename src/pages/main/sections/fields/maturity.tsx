@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Field, Input } from 'src/components';
+import * as validations from 'src/utils/validations';
 
 import { FormProps } from '../details-form';
 import * as formHelpers from './field.utils';
@@ -18,8 +19,12 @@ const PaymentDate: React.FC<Props> = ({ values, baseField, handleChangeValues })
     name="maturity"
     label="Maturity"
     component={Input.Number}
-    onBlur={() => {
-      const recalculatedValues = formHelpers.onMaturityChange(values, baseField);
+    validate={validations.isMore(0, 'Maturity cannot be less than 0')}
+    onChange={(maturity: string) => {
+      const recalculatedValues = formHelpers.onMaturityChange(
+        { ...values, maturity: Number(maturity) },
+        baseField,
+      );
 
       if (recalculatedValues) {
         handleChangeValues(recalculatedValues);

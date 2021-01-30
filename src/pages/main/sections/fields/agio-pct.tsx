@@ -10,7 +10,7 @@ interface Props {
   values: FormProps;
   baseField: formHelpers.AvailableCalculations | undefined;
   handleBaseFieldChange: (name: formHelpers.AvailableCalculations) => void;
-  handleChangeValues: (values: FormProps) => void;
+  handleChangeValue: any;
 }
 
 const AgioPct: React.FC<Props> = ({
@@ -18,7 +18,7 @@ const AgioPct: React.FC<Props> = ({
   baseField,
   disabled,
   handleBaseFieldChange,
-  handleChangeValues,
+  handleChangeValue,
 }) => (
   <Field
     disabled={disabled}
@@ -26,9 +26,18 @@ const AgioPct: React.FC<Props> = ({
     name="agioPct"
     label="Agio %"
     component={Input.Percentage}
-    onBlur={() => {
+    onChange={(agioPct: string) => {
       handleBaseFieldChange('agioPct');
-      handleChangeValues(formHelpers.BASE_FIELD_CALCULATIONS.agioPct(values));
+
+      const recalculatedValues = formHelpers.BASE_FIELD_CALCULATIONS.agioPct({
+        ...values,
+        agioPct: Number(agioPct),
+      });
+
+      handleChangeValue('agioPct', agioPct);
+      handleChangeValue('agioValue', recalculatedValues.agioValue);
+      handleChangeValue('aprPct', recalculatedValues.aprPct);
+      handleChangeValue('enoteFaceValue', recalculatedValues.enoteFaceValue);
     }}
   />
 );

@@ -10,7 +10,7 @@ interface Props {
   values: FormProps;
   baseField: formHelpers.AvailableCalculations | undefined;
   handleBaseFieldChange: (name: formHelpers.AvailableCalculations) => void;
-  handleChangeValues: (values: FormProps) => void;
+  handleChangeValue: any;
 }
 
 const AgioValue: React.FC<Props> = ({
@@ -18,7 +18,7 @@ const AgioValue: React.FC<Props> = ({
   baseField,
   disabled,
   handleBaseFieldChange,
-  handleChangeValues,
+  handleChangeValue,
 }) => (
   <Field
     disabled={disabled}
@@ -27,12 +27,18 @@ const AgioValue: React.FC<Props> = ({
     label="Agio CHF"
     component={Input.Currency}
     currency="CHF"
-    onBlur={() => {
+    onChange={(agioValue: string) => {
       handleBaseFieldChange('agioValue');
 
-      if (values.financingAmount > 0 && values.agioValue > 0 && values.maturity > 0) {
-        handleChangeValues(formHelpers.BASE_FIELD_CALCULATIONS.agioValue(values));
-      }
+      const recalculatedValues = formHelpers.BASE_FIELD_CALCULATIONS.agioValue({
+        ...values,
+        agioValue: Number(agioValue),
+      });
+
+      handleChangeValue('agioValue', agioValue);
+      handleChangeValue('agioPct', recalculatedValues.agioPct);
+      handleChangeValue('aprPct', recalculatedValues.aprPct);
+      handleChangeValue('enoteFaceValue', recalculatedValues.enoteFaceValue);
     }}
   />
 );

@@ -1,11 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import { Box } from 'src/core';
 
-const StyledInput = styled.input`
-  width: 100%;
-`;
+import { StyledInput } from './components';
 
 interface Props {
   // @TODO fix typings

@@ -17,21 +17,23 @@ const PaymentDate: React.FC<Props> = ({ values, baseField, handleChangeValues })
     label="Payment date"
     component={Input.Date}
     max={values.enoteDueDate}
-    onBlur={() => {
-      if (!!values.paymentDate && !!values.enoteDueDate) {
+    onChange={(value: any) => {
+      if (!!value && !!values.enoteDueDate) {
         const newMaturity = formHelpers.calculateMaturity(
-          new Date(values.paymentDate),
+          new Date(value),
           new Date(values.enoteDueDate),
         );
 
         const recalculatedValues = formHelpers.onMaturityChange(
-          { ...values, maturity: newMaturity },
+          { ...values, paymentDate: value, maturity: newMaturity },
           baseField,
         );
 
         if (recalculatedValues) {
           handleChangeValues(recalculatedValues);
         }
+      } else {
+        handleChangeValues({ ...values, paymentDate: value });
       }
     }}
   />
