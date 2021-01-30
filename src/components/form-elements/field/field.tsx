@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field as FormikField } from 'formik';
 
-import { FieldContainer } from './components';
+import { FieldContainer, FieldLabel } from './components';
 
 interface Props {
   label: string;
@@ -9,12 +9,13 @@ interface Props {
   component: any;
   min?: any;
   max?: any;
+  currency?: string;
   onBlur?: () => void;
 }
 
 const Field: React.FC<Props> = ({ label, name, component, ...rest }) => (
   <FieldContainer>
-    <div>{label}</div>
+    <FieldLabel>{label}</FieldLabel>
     <FormikField name={name} component={component} {...rest} />
   </FieldContainer>
 );

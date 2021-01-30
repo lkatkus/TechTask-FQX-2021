@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const StyledInput = styled.input`
   width: 100%;
 `;
+
 interface Props {
   // @TODO fix typings
   field: any;

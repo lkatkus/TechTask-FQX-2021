@@ -10,8 +10,8 @@ interface Props {
   field: any;
 }
 
-const TextInput: React.FC<Props> = ({ field, ...rest }) => {
+const PercentageInput: React.FC<Props> = ({ field, ...rest }) => {
   return <StyledInput type="number" {...field} {...rest} />;
 };
 
-export default TextInput;
+export default PercentageInput;
