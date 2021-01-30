@@ -1,6 +1,8 @@
 import { addDays, differenceInCalendarDays, isValid } from 'date-fns';
 
-import { FormProps } from './details-form';
+import { FormProps } from '../details-form';
+
+export type AvailableCalculations = 'agioPct' | 'agioValue' | 'aprPct' | 'enoteFaceValue';
 
 export const BASE_FIELD_CALCULATIONS = {
   agioPct: (values: FormProps): FormProps => {
@@ -17,7 +19,7 @@ export const BASE_FIELD_CALCULATIONS = {
 
     return recalculatedValues;
   },
-  agioValue: (values: FormProps) => {
+  agioValue: (values: FormProps): FormProps => {
     const newAgioPct = calculateAgioPct(values.agioValue, values.financingAmount);
     const newAprPct = calculateAprPct(newAgioPct, values.maturity);
     const newEnoteValue = calculateEnoteValue(values.financingAmount, values.agioValue);
@@ -31,7 +33,7 @@ export const BASE_FIELD_CALCULATIONS = {
 
     return recalculatedValues;
   },
-  aprPct: (values: FormProps) => {
+  aprPct: (values: FormProps): FormProps => {
     const newAgioPct = calculateAgioPctFromAprPct(values.aprPct, values.maturity);
     const newAgioValue = calculateAgioValueFromAgioPct(newAgioPct, values.financingAmount);
     const newEnoteValue = calculateEnoteValue(values.financingAmount, newAgioValue);
@@ -45,7 +47,7 @@ export const BASE_FIELD_CALCULATIONS = {
 
     return recalculatedValues;
   },
-  enoteFaceValue: (values: FormProps) => {
+  enoteFaceValue: (values: FormProps): FormProps => {
     const newAgioValue = calculateAgioValue(values.enoteFaceValue, values.financingAmount);
     const newAgioPct = calculateAgioPct(newAgioValue, values.financingAmount);
     const newAprPct = calculateAprPct(newAgioPct, values.maturity);
@@ -96,8 +98,6 @@ export const calculateAgioPctFromAprPct = (aprPct: number, maturity: number): nu
 export const calculateAprPct = (agioPct: number, maturity: number): number => {
   return (agioPct / maturity) * 360;
 };
-
-export type AvailableCalculations = 'agioPct' | 'agioValue' | 'aprPct' | 'enoteFaceValue';
 
 export const calculateRelated = (
   values: FormProps,

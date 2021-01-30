@@ -4,6 +4,7 @@ import { Field as FormikField } from 'formik';
 import { FieldContainer, FieldLabel } from './components';
 
 interface Props {
+  disabled?: boolean;
   label: string;
   name: string;
   component: any;
