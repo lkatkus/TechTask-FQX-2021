@@ -1,9 +1,11 @@
 import React from 'react';
 
+import { Main } from './pages';
+
 const App: React.FC = () => {
   return (
     <div>
-      <h1>App</h1>
+      <Main />
     </div>
   );
 };
